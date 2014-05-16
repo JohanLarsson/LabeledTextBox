@@ -7,59 +7,54 @@
         Title="MainWindow" Height="350" Width="525" 
         d:DataContext="{d:DesignInstance labeledTextBox:Vm}">
     <Window.Resources>
-        <Style TargetType="{x:Type labeledTextBox:NamedValueControl}">
+        <Style TargetType="{x:Type labeledTextBox:KeyValueControl}">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type labeledTextBox:NamedValueControl}">
+                    <ControlTemplate TargetType="{x:Type labeledTextBox:KeyValueControl}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Key, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <ContentPresenter Content="{Binding Key, RelativeSource={RelativeSource TemplatedParent}}" 
+                                              ContentTemplate="{TemplateBinding KeyTemplate}"/>
                             <TextBox Grid.Column="1" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"/>
+                            <!--<ContentPresenter Grid.Column="1" 
+                                              Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                                              ContentTemplate="{TemplateBinding ValueTemplate}"/>-->
+
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <DataTemplate DataType="{x:Type labeledTextBox:NamedValueControl}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Key}"/>
-                <TextBox Grid.Column="1" Text="{Binding Value}"/>
-            </Grid>
+        
+        <DataTemplate x:Key="ValueTemplate">
+            <TextBox Text="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Header="Itemscontrol">
+    <StackPanel>
+        <GroupBox Header="Itemscontrol">
             <ItemsControl>
-                <labeledTextBox:NamedValueControl Key="First" Value="{Binding Value1}"/>
-                <labeledTextBox:NamedValueControl Key="Second" Value="{Binding Value2}"/>
-                <labeledTextBox:NamedValueControl Key="Last" Value="{Binding Value3}"/>
+                <labeledTextBox:KeyValueControl Key="First" Value="{Binding Value1}" ValueTemplate="{StaticResource ValueTemplate}"/>
+                <labeledTextBox:KeyValueControl Key="Second" Value="{Binding Value2}" ValueTemplate="{StaticResource ValueTemplate}"/>
+                <labeledTextBox:KeyValueControl Key="Last" Value="{Binding Value3}" ValueTemplate="{StaticResource ValueTemplate}"/>
             </ItemsControl>
         </GroupBox>
-        <GroupBox Grid.Row="1" Header="Semi verbose">
+        <GroupBox Header="Semi verbose">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <labeledTextBox:NamedValueControl Grid.Row="0" Key="First" Value="{Binding Value1}"/>
-                <labeledTextBox:NamedValueControl Grid.Row="1" Key="Second" Value="{Binding Value2}"/>
-                <labeledTextBox:NamedValueControl Grid.Row="2" Key="Last" Value="{Binding Value3}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="0" Key="First" Value="{Binding Value1}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="1" Key="Second" Value="{Binding Value2}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="2" Key="Last" Value="{Binding Value3}"/>
             </Grid>
         </GroupBox>
-       <GroupBox Grid.Row="2" Header="Verbose Xaml">
+
+        <GroupBox Header="Verbose Xaml">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -80,5 +75,5 @@
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </GroupBox>
-    </Grid>
+    </StackPanel>
 </Window>
