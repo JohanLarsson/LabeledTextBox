@@ -9,6 +9,8 @@
         private string _value1 = "1";
         private string _value2 = "2";
         private string _value3 = "3";
+        private bool _bool1;
+        private bool _bool2;
 
         public Vm()
         {
@@ -57,6 +59,34 @@
                     return;
                 }
                 _value3 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Bool1
+        {
+            get { return _bool1; }
+            set
+            {
+                if (value.Equals(_bool1))
+                {
+                    return;
+                }
+                _bool1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Bool2
+        {
+            get { return _bool2; }
+            set
+            {
+                if (value.Equals(_bool2))
+                {
+                    return;
+                }
+                _bool2 = value;
                 OnPropertyChanged();
             }
         }

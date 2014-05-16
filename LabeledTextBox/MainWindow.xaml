@@ -7,7 +7,7 @@
         Title="MainWindow" Height="350" Width="525" 
         d:DataContext="{d:DesignInstance labeledTextBox:Vm}">
     <Window.Resources>
-        <Style TargetType="{x:Type labeledTextBox:KeyValueControl}">
+        <Style x:Key="TextBoxSTyle" TargetType="{x:Type labeledTextBox:KeyValueControl}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type labeledTextBox:KeyValueControl}">
@@ -16,41 +16,56 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <ContentPresenter Content="{Binding Key, RelativeSource={RelativeSource TemplatedParent}}" 
-                                              ContentTemplate="{TemplateBinding KeyTemplate}"/>
+                            <TextBlock Text="{Binding Key, RelativeSource={RelativeSource TemplatedParent}}"/>
                             <TextBox Grid.Column="1" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"/>
-                            <!--<ContentPresenter Grid.Column="1" 
-                                              Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
-                                              ContentTemplate="{TemplateBinding ValueTemplate}"/>-->
-
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        <DataTemplate x:Key="ValueTemplate">
-            <TextBox Text="{Binding}"/>
-        </DataTemplate>
+
+        <Style x:Key="CheckBoxStyle" TargetType="{x:Type labeledTextBox:KeyValueControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type labeledTextBox:KeyValueControl}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Key, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <CheckBox Grid.Column="1" IsChecked="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <StackPanel>
         <GroupBox Header="Itemscontrol">
             <ItemsControl>
-                <labeledTextBox:KeyValueControl Key="First" Value="{Binding Value1}" ValueTemplate="{StaticResource ValueTemplate}"/>
-                <labeledTextBox:KeyValueControl Key="Second" Value="{Binding Value2}" ValueTemplate="{StaticResource ValueTemplate}"/>
-                <labeledTextBox:KeyValueControl Key="Last" Value="{Binding Value3}" ValueTemplate="{StaticResource ValueTemplate}"/>
+                <labeledTextBox:KeyValueControl Key="First" Value="{Binding Value1}" Style="{StaticResource TextBoxSTyle}"/>
+                <labeledTextBox:KeyValueControl Key="Second" Value="{Binding Value2}" Style="{StaticResource TextBoxSTyle}"/>
+                <labeledTextBox:KeyValueControl Key="Last" Value="{Binding Value3}" Style="{StaticResource TextBoxSTyle}"/>
+                <labeledTextBox:KeyValueControl Key="Bool" Value="{Binding Bool1}" Style="{StaticResource CheckBoxStyle}"/>
+                <labeledTextBox:KeyValueControl Key="Bool" Value="{Binding Bool2}" Style="{StaticResource CheckBoxStyle}"/>
             </ItemsControl>
         </GroupBox>
+        
         <GroupBox Header="Semi verbose">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <labeledTextBox:KeyValueControl Grid.Row="0" Key="First" Value="{Binding Value1}"/>
-                <labeledTextBox:KeyValueControl Grid.Row="1" Key="Second" Value="{Binding Value2}"/>
-                <labeledTextBox:KeyValueControl Grid.Row="2" Key="Last" Value="{Binding Value3}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="0" Key="First" Value="{Binding Value1}" Style="{StaticResource TextBoxSTyle}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="1" Key="Second" Value="{Binding Value2}" Style="{StaticResource TextBoxSTyle}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="2" Key="Last" Value="{Binding Value3}" Style="{StaticResource TextBoxSTyle}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="3" Key="Bool" Value="{Binding Bool1}" Style="{StaticResource CheckBoxStyle}"/>
+                <labeledTextBox:KeyValueControl Grid.Row="4" Key="Bool" Value="{Binding Bool2}" Style="{StaticResource CheckBoxStyle}"/>
             </Grid>
         </GroupBox>
 
@@ -64,6 +79,8 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="First"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}"/>
@@ -73,6 +90,12 @@
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Last"/>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Bool1"/>
+                <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding Bool1, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Bool2"/>
+                <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding Bool2, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </GroupBox>
     </StackPanel>
