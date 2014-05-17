@@ -1,4 +1,4 @@
-﻿namespace LabeledTextBox
+﻿namespace CustomControls
 {
     using System.Windows;
     using System.Windows.Controls;
@@ -23,17 +23,10 @@
                 DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
             });
 
-        public static readonly DependencyProperty KeyTemplateProperty = DependencyProperty.Register(
-            "KeyTemplate",
-            typeof(DataTemplate),
-            typeof(KeyValueControl),
-            new PropertyMetadata(default(DataTemplate)));
-
-        public static readonly DependencyProperty ValueTemplateProperty = DependencyProperty.Register(
-            "ValueTemplate", 
-            typeof (DataTemplate), 
-            typeof (KeyValueControl), 
-            new PropertyMetadata(default(DataTemplate)));
+        static KeyValueControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(KeyValueControl), new FrameworkPropertyMetadata(typeof(KeyValueControl)));
+        }
 
         public string Key
         {
@@ -56,30 +49,6 @@
             set
             {
                 SetValue(ValueProperty, value);
-            }
-        }
-
-        public DataTemplate KeyTemplate
-        {
-            get
-            {
-                return (DataTemplate)GetValue(KeyTemplateProperty);
-            }
-            set
-            {
-                SetValue(KeyTemplateProperty, value);
-            }
-        }
-
-        public DataTemplate ValueTemplate
-        {
-            get
-            {
-                return (DataTemplate)GetValue(ValueTemplateProperty);
-            }
-            set
-            {
-                SetValue(ValueTemplateProperty, value);
             }
         }
     }
